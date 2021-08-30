@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Arquivos\Arquivos_Usuario\Recebidos\" />
+    <Folder Include="wwwroot\Arquivos\Recebidos\" />
   </ItemGroup>
 
 </Project>
