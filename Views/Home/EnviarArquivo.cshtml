@@ -17,9 +17,14 @@
     </div>
     <div class="container">
         @if (ViewData["Resultado"] != null)
-            {
-                <h2 class="display-4">@ViewData["Resultado"]</h2>
-            }
+        {
+            <h2 class="display-4">@ViewData["Resultado"]</h2>
+        }
+        @if (ViewData["Read"] != null)
+        {
+            <h2 class="display-4">@ViewData["Read"]</h2>
+        }
+
     </div>
     
 </div>

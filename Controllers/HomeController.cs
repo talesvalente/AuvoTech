@@ -37,7 +37,7 @@ namespace AuvoTech.Controllers
         {
             //INICIO DO TRATAMENTO DE ARQUIVO
 
-            //Checa se foi enviado algum arquivo
+            //Verifica se foi enviado algum arquivo
             if (arquivos.Count == 0)
             {
                 ViewData["Error"] = "Error: Arquivo(s) não selecionado(s)";
@@ -59,15 +59,21 @@ namespace AuvoTech.Controllers
                     return View(ViewData);
                 }
                 //Criacao de variaveis e Armazenamento dos Arquivos
+                //var file = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "email", "EmailRegister.htm");
                 string wwwRoot  = _appEnvironment.WebRootPath;
                 string fileDb   = "\\Arquivos\\";
                 string fileDest = "\\Recebidos\\";
                 string fileName = arquivo.FileName.ToString();
+                string fullPath = wwwRoot + fileDb + fileDest + fileName;
 
-                using (var stream = new FileStream(wwwRoot + fileDb + fileDest + fileName, FileMode.Create))
+                using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     await arquivo.CopyToAsync(stream);
                 }
+
+                string readFile = System.IO.File.ReadAllText(fullPath);
+
+                ViewData["Read"] = $"{readFile}";
             }
 
             //FINAL
