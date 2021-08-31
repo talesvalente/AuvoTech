@@ -35,29 +35,34 @@ namespace AuvoTech.Controllers
         //método para enviar os arquivos usando a interface IFormFile
         public async Task<IActionResult> EnviarArquivo(List<IFormFile> arquivos)
         {
+            //INICIO DO TRATAMENTO DE ARQUIVO
 
-            // processa os arquivo enviados
-            //percorre a lista de arquivos selecionados
+            //Checa se foi enviado algum arquivo
+            if (arquivos.Count == 0)
+            {
+                ViewData["Error"] = "Error: Arquivo(s) não selecionado(s)";
+                return View(ViewData);
+            }         
+            // VERIFICA SE OS ARQUIVOS ENVIADOS SEGUEM OS PADROES EXIGIDOS PELO APLICATIVO
             foreach (var arquivo in arquivos)
             {
-                //verifica se existem arquivos 
+                //verifica se existem arquivos vazios e alerta o usuario. Necessario (?)
                 if (arquivo == null || arquivo.Length == 0)
                 {
-                    //retorna a viewdata com erro
-                    ViewData["Erro"] = "Error: Arquivo(s) não selecionado(s)";
+                    ViewData["Error"] = $"Aviso: Voce importou um arquivo vazio {arquivo.FileName}.";
                     return View(ViewData);
                 }
-                //verifica qual o tipo de arquivo enviado
+                //Verifica e restringe o tipo de arquivo enviado
                 if (!arquivo.FileName.Contains(".ofx"))
                 {
                     ViewData["Error"] = "Aviso: Arquivo Não Suportado. Somente arquivos do tipo '.ofx' são aceitos na aplicação. Tente novamente.";
                     return View(ViewData);
                 }
-
-                string wwwRoot   = _appEnvironment.WebRootPath;
-                string fileDb    = "\\Arquivos\\";
-                string fileDest  = "\\Recebidos\\";
-                string fileName  = arquivo.FileName.ToString();
+                //Criacao de variaveis e Armazenamento dos Arquivos
+                string wwwRoot = _appEnvironment.WebRootPath;
+                string fileDb = "\\Arquivos\\";
+                string fileDest = "\\Recebidos\\";
+                string fileName = arquivo.FileName.ToString();
 
                 using (var stream = new FileStream(wwwRoot + fileDb + fileDest + fileName, FileMode.Create))
                 {
@@ -65,11 +70,9 @@ namespace AuvoTech.Controllers
                 }
             }
 
-            //monta a ViewData que será exibida na view como resultado do envio 
-            ViewData["Resultado"] = $"{arquivos.Count} arquivos foram enviados ao servidor, " +
-             $"com tamanho total de : x bytes";
-
-            //retorna a viewdata
+            //FINAL
+            //Mostra a leitura dos arquivos .OFX removendo as transacoes repetidas 
+            ViewData["Resultado"] = $"Falta fazer isso pra terminar o desafio";
             return View(ViewData);
         }
 
