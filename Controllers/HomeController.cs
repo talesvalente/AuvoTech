@@ -59,8 +59,8 @@ namespace AuvoTech.Controllers
                     return View(ViewData);
                 }
                 //Criacao de variaveis e Armazenamento dos Arquivos
-                string wwwRoot = _appEnvironment.WebRootPath;
-                string fileDb = "\\Arquivos\\";
+                string wwwRoot  = _appEnvironment.WebRootPath;
+                string fileDb   = "\\Arquivos\\";
                 string fileDest = "\\Recebidos\\";
                 string fileName = arquivo.FileName.ToString();
 
